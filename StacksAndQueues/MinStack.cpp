@@ -21,9 +21,8 @@ A: In this case, return -1
 https://www.interviewbit.com/problems/min-stack/
 */
 
-vector<int> myStack;
-int flag;
-int minEle;
+vector<int> v;
+int min1;
 
 MinStack::MinStack() {
     myStack.clear(); 
@@ -32,33 +31,28 @@ MinStack::MinStack() {
 }
 
 void MinStack::push(int x) {
-    myStack.push_back(x);
-    minEle = min(minEle, x);
+    v.push_back(x);
+        if(x<min1){
+            min1=x;
+        }
 }
 
 void MinStack::pop() {
-    if(!myStack.empty())
-    {
-        if(myStack[myStack.size()-1] == minEle)
-            flag = true;
-        myStack.pop_back();
-    }
+  if(v.back()==min1){
+            v.pop_back();
+            min1=*min_element(v.begin(),v.end());
+        }
+        else
+        {
+            v.pop_back();
+        }
+        
 }
 
 int MinStack::top() {
-    if (myStack.empty())
-        return -1;
-    return myStack[myStack.size()-1];
+   return v.back();
 }   
 
 int MinStack::getMin() {
-    if (myStack.empty())
-        return -1;
-    if (flag)
-    {
-        minEle = INT_MAX;
-        for (auto i = 0; i<myStack.size(); ++i)
-            minEle = min(minEle, myStack[i]);
-    }
-    return minEle;
+    return min1
 }
